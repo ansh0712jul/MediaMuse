@@ -122,3 +122,40 @@ export const loginUser = asyncHandler( async(req , res ) =>{
         )
     )
 })
+
+// endpoint to logout user
+
+export const logoutUser = asyncHandler( async(req , res ) =>{
+    if(!req.user){
+        throw new ApiError(400 , "user is not Authenticated");
+    }
+
+    await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $set : {
+                refreshToken : undefined
+            }
+        },
+        {new : true} //  returns the updated document, rather than the original one. If set to false, it will return the original document.
+    )
+
+
+    const options = {
+        httpsOnly : true,
+        secure : true,
+    }
+
+    return res
+    .status(200)
+    .cookie("refreshToken" , "" , options)
+    .cookie("accessToken" , "" , options)
+    .json(
+        new ApiResponse(
+            200,
+            {},
+            "user logged out successfully"
+        )
+    )
+
+})
