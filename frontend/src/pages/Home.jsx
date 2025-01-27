@@ -2,36 +2,50 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
-import { Paintbrush, Eye, Zap } from "lucide-react"
+import {  Instagram,  Linkedin, Twitter } from "lucide-react"
 import { Link } from "react-router-dom"
 
 const features = [
   {
-    title: "Easy Design",
-    description: "Create stunning social media posts with our intuitive design tools.",
-    icon: Paintbrush,
+    title: "Twitter Threads",
+    description: "Generate compelling Twitter threads that engage your audience and boost your reach.",
+    icon: Twitter,
   },
   {
-    title: "Multi-Platform Preview",
-    description: "See how your content will look on different social media platforms before posting.",
-    icon: Eye,
+    title: "Instagram Captions",
+    description: "Create catchy captions for your Instagram posts that increase engagement and followers.",
+    icon: Instagram,
   },
   {
-    title: "Efficient Workflow",
-    description: "Streamline your content creation process and save time.",
-    icon: Zap,
+    title: "Linkedin Post",
+    description: "Craft professional content for your LinkedIn network to establish thought leadership.",
+    icon: Linkedin,
   },
 ]
 
 const platforms = [
-  { name: "Instagram", logo: "/placeholder.svg?height=80&width=80" },
-  { name: "Facebook", logo: "/placeholder.svg?height=80&width=80" },
-  { name: "Twitter", logo: "/placeholder.svg?height=80&width=80" },
+  { name: "Instagram", logo: "https://images.unsplash.com/photo-1611262588024-d12430b98920?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5zdGFncmFtJTIwbG9nb3xlbnwwfHwwfHx8MA%3D%3D" },
+  { name: "Facebook", logo: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png" },
+  { name: "Twitter", logo: "https://images.unsplash.com/photo-1611605698335-8b1569810432?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZmFjZWJvb2slMjBsb2dvfGVufDB8fDB8fHww" },
 ]
 
 export default function Home() {
   const [isDarkTheme, setIsDarkTheme] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
+
+  // to handle the scroll effect
+
+  useEffect(() =>{
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+    window.addEventListener("scroll", handleScroll)
+
+    return () => window.removeEventListener("scroll", handleScroll)
+
+  })
+  console.log(isScrolled)
 
   // to hanlde the responsive design
   useEffect(() => {
@@ -57,20 +71,23 @@ export default function Home() {
 
   return (
     <>
-        <header className="bg-white dark:bg-gray-900 shadow-sm">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header className={` fixed w-full  z-50 ${isScrolled ? "bg-gray-900/80 backdrop-blur-lg"   : "bg-transparent"} transition-all duration-300 h-24  `}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="flex justify-between h-16">
-          <div className="flex">
+          <div className="flex mt-9">
             <Link to="/" className="flex-shrink-0 flex items-center">
               <span className="text-2xl font-bold text-purple-600 dark:text-blue-400">Media Muse</span>
             </Link>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center mt-9">
             <Button variant="ghost" className="mr-2 dark:text-gray-300">
-              Log in
+              Features
             </Button>
-            <Button className="bg-purple-600 hover:bg-purple-700 dark:bg-blue-600 dark:hover:bg-blue-700">
-              Sign up
+            <Button variant="ghost" className="mr-2 dark:text-gray-300">
+              <Link to={"/pricing-page"}>Pricing</Link>
+            </Button>
+            <Button variant="ghost" className="mr-2 dark:text-gray-300">
+              Documentation
             </Button>
           </div>
         </div>
@@ -81,7 +98,7 @@ export default function Home() {
         >
         <section className="py-20 px-4 text-center">
             <h1
-            className={`text-4xl md:text-6xl font-bold mb-6 ${isDarkTheme ? "text-blue-400" : "bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600"}`}
+            className={`text-4xl md:text-6xl font-bold mb-6 ${ "bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600"}`}
             >
             Welcome to Media Muse
             </h1>
@@ -92,7 +109,7 @@ export default function Home() {
             size="lg"
             className={isDarkTheme ? "bg-blue-600 hover:bg-blue-700" : "bg-purple-600 hover:bg-purple-700"}
             >
-            Get Started
+            <Link to="/sign-in">Getting Started </Link>
             </Button>
         </section>
 
@@ -105,7 +122,7 @@ export default function Home() {
                 className={`transition-all hover:shadow-lg ${isDarkTheme ? "bg-gray-700 text-white" : ""}`}
                 >
                 <CardHeader>
-                    <feature.icon className={`w-12 h-12 mb-4 ${isDarkTheme ? "text-blue-400" : "text-purple-600"}`} />
+                    <feature.icon className={`w-12 h-12 mb-4 ${isDarkTheme ? "text-red-400" : "text-purple-600"}`} />
                     <CardTitle>{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -146,7 +163,7 @@ export default function Home() {
                 isDarkTheme ? "bg-white text-blue-900 hover:bg-gray-100" : "bg-white text-purple-600 hover:bg-gray-100"
             }
             >
-            Sign Up Now
+            <Link to="/sign-up">Sign Up Now</Link>
             </Button>
         </section>
         </main>
@@ -169,7 +186,7 @@ export default function Home() {
             <Link href="#" className="text-gray-600 hover:text-purple-600 dark:text-gray-300 dark:hover:text-blue-400">
               Terms
             </Link>
-            <Link href="#" className="text-gray-600 hover:text-purple-600 dark:text-gray-300 dark:hover:text-blue-400">
+            <Link to="#" className="text-gray-600 hover:text-purple-600 dark:text-gray-300 dark:hover:text-blue-400">
               Contact
             </Link>
           </div>
