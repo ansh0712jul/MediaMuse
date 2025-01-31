@@ -87,7 +87,7 @@ export default function Home() {
               <Link to={"/pricing-page"}>Pricing</Link>
             </Button>
             <Button variant="ghost" className="mr-2 dark:text-gray-300">
-              Documentation
+              <Link to={"/dashboard"}>Dashboard</Link>
             </Button>
           </div>
         </div>

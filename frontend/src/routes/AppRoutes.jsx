@@ -1,3 +1,4 @@
+import Dashboard from "@/pages/Dashboard";
 import Home from "@/pages/Home";
 import PricingPage  from "@/pages/PricingPage";
 import SignIn from "@/pages/SignIn";
@@ -13,6 +14,7 @@ const AppRoutes = () => {
             <Route path="/sign-in" element = { <SignIn/> }/>
             <Route path="/" element={<Home/>}/>
             <Route path="/pricing-page" element={<PricingPage/>}/>
+            <Route path="/dashboard" element={<Dashboard/>}/>
         </Routes>
         </BrowserRouter>
     )
